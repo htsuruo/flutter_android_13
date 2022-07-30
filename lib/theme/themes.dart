@@ -1,6 +1,8 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
+// `material-dynamic-color-flutter`のサンプル
+// ref. https://github.com/material-foundation/material-dynamic-color-flutter/blob/main/example/lib/complete_example.dart
 class Themes {
   Themes();
   static const _seedColor = Colors.green;
