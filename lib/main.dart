@@ -2,6 +2,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_android_13/components/filled_button.dart';
 import 'package:flutter_android_13/components/filled_tonal_button.dart';
+import 'package:flutter_android_13/theme/app_colors.dart';
 import 'package:flutter_android_13/theme/themes.dart';
 import 'package:gap/gap.dart';
 import 'package:intersperse/intersperse.dart';
@@ -64,6 +65,10 @@ class HomePage extends StatelessWidget {
                   color: colorScheme.error,
                 ),
               ],
+            ),
+            _ColorCircle(
+              schemeName: 'Custom',
+              color: theme.extension<AppColors>()!.accent,
             ),
             const Divider(),
             const FilledButton(),
