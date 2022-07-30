@@ -89,7 +89,15 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: ((context) => const AlertDialog(
+                  title: Text('Title'),
+                  content: Text('this is content'),
+                )),
+          );
+        },
         child: const Icon(Icons.add),
       ),
     );
