@@ -2,6 +2,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_android_13/components/filled_button.dart';
 import 'package:flutter_android_13/components/filled_tonal_button.dart';
+import 'package:flutter_android_13/theme/themes.dart';
 import 'package:gap/gap.dart';
 import 'package:intersperse/intersperse.dart';
 
@@ -9,40 +10,19 @@ void main() {
   runApp(const MyApp());
 }
 
-const _brandGreen = Colors.green;
 const _titleLabel = 'Dynamic Theme Sample';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return DynamicColorBuilder(
       builder: ((lightDynamic, darkDynamic) {
-        final lightScheme = lightDynamic == null
-            ? ColorScheme.fromSeed(
-                seedColor: _brandGreen,
-              )
-            : lightDynamic.harmonized();
-
-        final darkScheme = darkDynamic == null
-            ? ColorScheme.fromSeed(
-                seedColor: _brandGreen,
-                brightness: Brightness.dark,
-              )
-            : darkDynamic.harmonized();
-
         return MaterialApp(
           title: _titleLabel,
-          theme: ThemeData.from(
-            colorScheme: lightScheme,
-            useMaterial3: true,
-          ),
-          darkTheme: ThemeData.from(
-            colorScheme: darkScheme,
-            useMaterial3: true,
-          ),
+          theme: Themes.light(dynamic: lightDynamic),
+          darkTheme: Themes.dark(dynamic: darkDynamic),
           home: const HomePage(),
         );
       }),
