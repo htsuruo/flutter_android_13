@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:intersperse/intersperse.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,24 +33,64 @@ class HomePage extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     return Scaffold(
       appBar: AppBar(title: const Text('Flutter Android 13 Sample')),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(24),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('colorScheme.primary'),
-            Container(
-              width: 80,
-              height: 80,
-              margin: const EdgeInsets.all(16),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _ColorCircle(
+              schemeName: 'Primary',
               color: colorScheme.primary,
-            )
-          ],
+            ),
+            _ColorCircle(
+              schemeName: 'Secondary',
+              color: colorScheme.secondary,
+            ),
+            _ColorCircle(
+              schemeName: 'Tertiary',
+              color: colorScheme.tertiary,
+            ),
+          ].intersperse(const Gap(16)).toList(),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),
       ),
+    );
+  }
+}
+
+class _ColorCircle extends StatelessWidget {
+  const _ColorCircle({
+    required this.schemeName,
+    required this.color,
+  });
+
+  final String schemeName;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    const size = 60.0;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          schemeName,
+          style: theme.textTheme.titleMedium,
+        ),
+        const Gap(8),
+        Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ],
     );
   }
 }
