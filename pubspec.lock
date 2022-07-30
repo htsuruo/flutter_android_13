@@ -102,6 +102,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   matcher:
     dependency: transitive
     description:
@@ -130,6 +137,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.1"
+  simple_logger:
+    dependency: "direct main"
+    description:
+      name: simple_logger
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.9.0"
   sky_engine:
     dependency: transitive
     description: flutter

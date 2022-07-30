@@ -1,4 +1,7 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_android_13/components/filled_button.dart';
+import 'package:flutter_android_13/components/filled_tonal_button.dart';
 import 'package:gap/gap.dart';
 import 'package:intersperse/intersperse.dart';
 
@@ -6,20 +9,43 @@ void main() {
   runApp(const MyApp());
 }
 
+const _brandGreen = Colors.green;
+const _titleLabel = 'Dynamic Theme Sample';
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Android 13 Sample',
-      theme: ThemeData.from(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
-        ),
-      ).copyWith(useMaterial3: true),
-      home: const HomePage(),
+    return DynamicColorBuilder(
+      builder: ((lightDynamic, darkDynamic) {
+        final lightScheme = lightDynamic == null
+            ? ColorScheme.fromSeed(
+                seedColor: _brandGreen,
+              )
+            : lightDynamic.harmonized();
+
+        final darkScheme = darkDynamic == null
+            ? ColorScheme.fromSeed(
+                seedColor: _brandGreen,
+                brightness: Brightness.dark,
+              )
+            : darkDynamic.harmonized();
+
+        return MaterialApp(
+          title: _titleLabel,
+          theme: ThemeData.from(
+            colorScheme: lightScheme,
+            useMaterial3: true,
+          ),
+          darkTheme: ThemeData.from(
+            colorScheme: darkScheme,
+            useMaterial3: true,
+          ),
+          home: const HomePage(),
+        );
+      }),
     );
   }
 }
@@ -32,23 +58,47 @@ class HomePage extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Android 13 Sample')),
+      appBar: AppBar(title: const Text(_titleLabel)),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _ColorCircle(
-              schemeName: 'Primary',
-              color: colorScheme.primary,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _ColorCircle(
+                  schemeName: 'Primary',
+                  color: colorScheme.primary,
+                ),
+                _ColorCircle(
+                  schemeName: 'Secondary',
+                  color: colorScheme.secondary,
+                ),
+                _ColorCircle(
+                  schemeName: 'Tertiary',
+                  color: colorScheme.tertiary,
+                ),
+                _ColorCircle(
+                  schemeName: 'Error',
+                  color: colorScheme.error,
+                ),
+              ],
             ),
-            _ColorCircle(
-              schemeName: 'Secondary',
-              color: colorScheme.secondary,
+            const Divider(),
+            const FilledButton(),
+            const FilledTonalButton(),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Elevated'),
             ),
-            _ColorCircle(
-              schemeName: 'Tertiary',
-              color: colorScheme.tertiary,
+            OutlinedButton(
+              onPressed: () {},
+              child: const Text('Outlined'),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: const Text('Text'),
             ),
           ].intersperse(const Gap(16)).toList(),
         ),
@@ -75,11 +125,11 @@ class _ColorCircle extends StatelessWidget {
     final theme = Theme.of(context);
     const size = 60.0;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           schemeName,
-          style: theme.textTheme.titleMedium,
+          style:
+              theme.textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
         ),
         const Gap(8),
         Container(
