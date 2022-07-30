@@ -47,7 +47,11 @@ android {
         applicationId "com.tsuruoka.flutter_android_13"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+
+        // `minSdkVersion`を明示しないと`flutter_launcher_icons`の自動生成でこけてしまうため明示
+        // ref. https://github.com/fluttercommunity/flutter_launcher_icons/issues/384
+        minSdkVersion 23
+        // minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
