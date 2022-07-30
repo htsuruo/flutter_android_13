@@ -84,3 +84,4 @@ flutter_icons:
   ios: false
   image_path: "assets/ic_tsuruo_triangle.png"
   adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/ic_tsuruo_triangle.png"
