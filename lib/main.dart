@@ -175,9 +175,7 @@ class _NotificationPageState extends State<_NotificationPage> {
         onPressed: status == null || status.isGranted
             ? null
             : () async {
-                if (status.isDenied) {
-                  _status = await Permission.notification.request();
-                }
+                _status = await Permission.notification.request();
                 setState(() {});
               },
         child: const Icon(Icons.add),
