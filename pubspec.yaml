@@ -27,19 +27,20 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  cupertino_icons:
-  dynamic_color:
+  cupertino_icons: null
+  dynamic_color: null
   flutter:
     sdk: flutter
-  gap:
-  intersperse:
-  simple_logger:
+  gap: null
+  intersperse: null
+  permission_handler:
+  simple_logger: null
 
 dev_dependencies:
-  flutter_lints:
+  flutter_launcher_icons: null
+  flutter_lints: null
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -77,7 +78,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
 
 flutter_icons:
   android: true
