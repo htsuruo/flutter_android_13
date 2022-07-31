@@ -2,6 +2,11 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.tsuruoka.flutter_android_13"
 >
+
+  <!-- ref. https://github.com/Baseflow/flutter-permission-handler/blob/master/permission_handler/example/android/app/src/main/AndroidManifest.xml -->
+  <!-- https://developer.android.com/about/versions/13/changes/notification-permission?hl=ja#use -->
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
    <application
     android:label="flutter_android_13"
     android:name="${applicationName}"

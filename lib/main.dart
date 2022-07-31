@@ -6,12 +6,14 @@ import 'package:flutter_android_13/theme/app_colors.dart';
 import 'package:flutter_android_13/theme/themes.dart';
 import 'package:gap/gap.dart';
 import 'package:intersperse/intersperse.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:simple_logger/simple_logger.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-const _titleLabel = 'Dynamic Theme Sample';
+final _logger = SimpleLogger();
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -21,25 +23,26 @@ class MyApp extends StatelessWidget {
     return DynamicColorBuilder(
       builder: ((lightDynamic, darkDynamic) {
         return MaterialApp(
-          title: _titleLabel,
+          title: 'Flutter Android 13 Sample',
           theme: Themes.light(dynamic: lightDynamic),
           darkTheme: Themes.dark(dynamic: darkDynamic),
-          home: const HomePage(),
+          home: const _NotificationPage(),
+          // home: const _DynamicColorPage(),
         );
       }),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class _DynamicColorPage extends StatelessWidget {
+  const _DynamicColorPage();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     return Scaffold(
-      appBar: AppBar(title: const Text(_titleLabel)),
+      appBar: AppBar(title: const Text('Dynamic Color Sample')),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -134,6 +137,52 @@ class _ColorCircle extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _NotificationPage extends StatefulWidget {
+  const _NotificationPage();
+
+  @override
+  State<_NotificationPage> createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends State<_NotificationPage> {
+  PermissionStatus? _status;
+
+  @override
+  void initState() {
+    super.initState();
+    Future(() async {
+      final notificationStatus = await Permission.notification.status;
+      _logger.info('notificationStatus: $notificationStatus');
+      setState(() {
+        _status = notificationStatus;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final status = _status;
+    return Scaffold(
+      appBar: AppBar(title: const Text('Notification Permission Sample')),
+      body: ListTile(
+        title: const Text('Notification Status'),
+        trailing: Text(_status?.name ?? 'Loading...'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: status == null
+            ? null
+            : () async {
+                if (status.isDenied) {
+                  _status = await Permission.notification.request();
+                }
+                setState(() {});
+              },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

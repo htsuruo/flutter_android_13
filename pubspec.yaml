@@ -27,18 +27,18 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  cupertino_icons: null
-  dynamic_color: null
+  cupertino_icons:
+  dynamic_color:
   flutter:
     sdk: flutter
-  gap: null
-  intersperse: null
+  gap:
+  intersperse:
   permission_handler:
-  simple_logger: null
+  simple_logger:
 
 dev_dependencies:
-  flutter_launcher_icons: null
-  flutter_lints: null
+  flutter_launcher_icons:
+  flutter_lints:
   flutter_test:
     sdk: flutter
 
