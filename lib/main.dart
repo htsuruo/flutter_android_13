@@ -157,9 +157,8 @@ class _NotificationPageState extends State<_NotificationPage> {
     Future(() async {
       final notificationStatus = await Permission.notification.status;
       _logger.info('notificationStatus: $notificationStatus');
-      setState(() {
-        _status = notificationStatus;
-      });
+      _status = notificationStatus;
+      setState(() {});
     });
   }
 
@@ -173,7 +172,7 @@ class _NotificationPageState extends State<_NotificationPage> {
         trailing: Text(_status?.name ?? 'Loading...'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: status == null
+        onPressed: status == null || status.isGranted
             ? null
             : () async {
                 if (status.isDenied) {
