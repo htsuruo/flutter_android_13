@@ -1,4 +1,5 @@
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_android_13/components/filled_button.dart';
 import 'package:flutter_android_13/components/filled_tonal_button.dart';
@@ -141,6 +142,7 @@ class _ColorCircle extends StatelessWidget {
   }
 }
 
+// `firebase_messaging`を使う場合
 class _NotificationPage extends StatefulWidget {
   const _NotificationPage();
 
@@ -149,6 +151,53 @@ class _NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<_NotificationPage> {
+  late NotificationSettings _status;
+
+  @override
+  void initState() {
+    super.initState();
+    Future(() async {
+      final notificationStatus =
+          await FirebaseMessaging.instance.getNotificationSettings();
+      _logger.info('notificationStatus: $notificationStatus');
+      _status = notificationStatus;
+      setState(() {});
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final status = _status;
+    return Scaffold(
+      appBar: AppBar(title: const Text('Notification Permission Sample')),
+      body: ListTile(
+        title: const Text('Notification Status'),
+        trailing: Text(_status.authorizationStatus.name),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: status.authorizationStatus == AuthorizationStatus.authorized
+            ? null
+            : () async {
+                _status = await FirebaseMessaging.instance.requestPermission();
+                setState(() {});
+              },
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+// `firebase_messaging`を使う場合
+class _NotificationPageWithPermissionHandler extends StatefulWidget {
+  const _NotificationPageWithPermissionHandler();
+
+  @override
+  State<_NotificationPageWithPermissionHandler> createState() =>
+      _NotificationPageWithPermissionHandlerState();
+}
+
+class _NotificationPageWithPermissionHandlerState
+    extends State<_NotificationPageWithPermissionHandler> {
   PermissionStatus? _status;
 
   @override
